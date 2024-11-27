@@ -1,16 +1,20 @@
 package ee.ivkhkdev.HRDepartment.entities;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Employee {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String position;
     private String salary;
+    @OneToOne
     private Person person;
 
     public Employee() {
     }
 
-    public Employee(Long id, String position, String salary, Person person) {
-        this.id = id;
+    public Employee(String position, String salary, Person person) {
         this.position = position;
         this.salary = salary;
         this.person = person;

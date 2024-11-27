@@ -11,12 +11,4 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class JavaConfiguration {
 
-    @Bean
-    public AppHelper<Person> personAppHelper(){
-        return new PersonAppHelper();
-    }
-    @Bean
-    public AppHelper<Employee> employeeAppHelper(AppHelper<Person> personAppHelper){
-        return new EmployeeAppHelper(personAppHelper);
-    }
 }

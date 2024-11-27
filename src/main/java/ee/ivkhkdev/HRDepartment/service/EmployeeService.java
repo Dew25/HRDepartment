@@ -1,25 +1,32 @@
 package ee.ivkhkdev.HRDepartment.service;
 import ee.ivkhkdev.HRDepartment.entities.Employee;
 import ee.ivkhkdev.HRDepartment.helpers.AppHelper;
+import ee.ivkhkdev.HRDepartment.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService implements AppService<Employee>{
 
     private final AppHelper<Employee> employeeAppHelper;
+    private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public EmployeeService(AppHelper<Employee> employeeAppHelper){
+    public EmployeeService(AppHelper<Employee> employeeAppHelper, EmployeeRepository employeeRepository){
         this.employeeAppHelper=employeeAppHelper;
+        this.employeeRepository = employeeRepository;
     };
 
     @Override
     public boolean add() {
-        Employee employee = employeeAppHelper.create();
-        if(employee == null) return false;
-        return this.print(List.of(employee));
+        Optional<Employee> employee = employeeAppHelper.create();
+        if(employee.isPresent()){
+            employeeRepository.save(employee.get());
+            return true;
+        }
+        return false;
 
     }
 
@@ -28,8 +35,14 @@ public class EmployeeService implements AppService<Employee>{
         return false;
     }
 
+
     @Override
-    public boolean print(List<Employee> entities) {
-        return employeeAppHelper.pirintLits(entities);
+    public List<Employee> list() {
+        return employeeRepository.findAll();
+    }
+
+    @Override
+    public boolean print() {
+        return employeeAppHelper.pirintLits(employeeRepository.findAll());
     }
 }

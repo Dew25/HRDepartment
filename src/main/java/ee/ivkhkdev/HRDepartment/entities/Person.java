@@ -1,6 +1,15 @@
 package ee.ivkhkdev.HRDepartment.entities;
 
-public class Person {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+import java.io.Serializable;
+
+@Entity
+public class Person implements Serializable {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firsname;
     private String lastname;
@@ -9,8 +18,7 @@ public class Person {
     public Person() {
     }
 
-    public Person(Long id, String firsname, String lastname, String phone) {
-        this.id = id;
+    public Person( String firsname, String lastname, String phone) {
         this.firsname = firsname;
         this.lastname = lastname;
         this.phone = phone;
