@@ -43,6 +43,6 @@ public class EmployeeService implements AppService<Employee>{
 
     @Override
     public boolean print() {
-        return employeeAppHelper.pirintLits(employeeRepository.findAll());
+        return employeeAppHelper.pirintLits();
     }
 }

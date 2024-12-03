@@ -33,7 +33,7 @@ public class PersonService implements AppService<Person>{
 
     @Override
     public boolean print() {
-        return personAppHelper.pirintLits(this.list());
+        return personAppHelper.pirintLits();
     }
 
     @Override

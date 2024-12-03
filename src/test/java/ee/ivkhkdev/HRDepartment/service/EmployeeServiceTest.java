@@ -85,7 +85,7 @@ class EmployeeServiceTest {
         Employee employee2 = new Employee();
         List<Employee> mockEmployees = List.of(employee1, employee2);
         when(employeeRepository.findAll()).thenReturn(mockEmployees);
-        when(employeeAppHelper.pirintLits(mockEmployees)).thenReturn(true);
+        when(employeeAppHelper.pirintLits()).thenReturn(true);
 
         // Act
         boolean result = employeeService.print();
@@ -93,7 +93,7 @@ class EmployeeServiceTest {
         // Assert
         assertTrue(result, "Printing the list of employees should succeed.");
         verify(employeeRepository, times(1)).findAll();
-        verify(employeeAppHelper, times(1)).pirintLits(mockEmployees);
+        verify(employeeAppHelper, times(1)).pirintLits();
     }
 
     @Test
@@ -101,7 +101,7 @@ class EmployeeServiceTest {
         // Arrange
         List<Employee> mockEmployees = List.of();
         when(employeeRepository.findAll()).thenReturn(mockEmployees);
-        when(employeeAppHelper.pirintLits(mockEmployees)).thenReturn(false);
+        when(employeeAppHelper.pirintLits()).thenReturn(false);
 
         // Act
         boolean result = employeeService.print();
@@ -109,6 +109,6 @@ class EmployeeServiceTest {
         // Assert
         assertFalse(result, "Printing the list of employees should fail for an empty list.");
         verify(employeeRepository, times(1)).findAll();
-        verify(employeeAppHelper, times(1)).pirintLits(mockEmployees);
+        verify(employeeAppHelper, times(1)).pirintLits();
     }
 }

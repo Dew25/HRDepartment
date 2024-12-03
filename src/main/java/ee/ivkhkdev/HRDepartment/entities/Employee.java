@@ -2,13 +2,15 @@ package ee.ivkhkdev.HRDepartment.entities;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 public class Employee {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String position;
     private String salary;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Person person;
 
     public Employee() {
@@ -61,5 +63,23 @@ public class Employee {
         sb.append(", person=").append(person);
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Employee employee = (Employee) o;
+        return Objects.equals(id, employee.id) && Objects.equals(position, employee.position) && Objects.equals(salary, employee.salary) && Objects.equals(person, employee.person);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hashCode(id);
+        result = 31 * result + Objects.hashCode(position);
+        result = 31 * result + Objects.hashCode(salary);
+        result = 31 * result + Objects.hashCode(person);
+        return result;
     }
 }

@@ -5,6 +5,6 @@ import java.util.Optional;
 
 public interface AppHelper<T> {
     Optional<T> create();
-    boolean pirintLits(List<T> entities);
-    List<T> update(List<T> entities);
+    boolean pirintLits();
+    boolean update(T t);
 }

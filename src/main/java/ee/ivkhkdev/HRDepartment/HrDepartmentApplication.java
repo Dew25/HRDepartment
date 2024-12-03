@@ -3,6 +3,7 @@ package ee.ivkhkdev.HRDepartment;
 import ee.ivkhkdev.HRDepartment.input.Input;
 import ee.ivkhkdev.HRDepartment.service.EmployeeService;
 import ee.ivkhkdev.HRDepartment.service.PersonService;
+import ee.ivkhkdev.HRDepartment.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +17,8 @@ public class HrDepartmentApplication implements CommandLineRunner {
     private EmployeeService employeeService;
 	@Autowired
 	private PersonService personService;
+	@Autowired
+	private UserService userService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(HrDepartmentApplication.class, args);
@@ -27,8 +30,7 @@ public class HrDepartmentApplication implements CommandLineRunner {
 		do{
 			System.out.println("Список задач:");
 			System.out.println("0. Выход:");
-			System.out.println("1. Добавить работника:");
-			System.out.println("2. Добавить персону:");
+			System.out.println("1. Добавить пользователя:");
 			System.out.print("Введите номер задачи: ");
 			int task = Integer.parseInt(input.nextLine());
 			switch (task){
@@ -36,17 +38,10 @@ public class HrDepartmentApplication implements CommandLineRunner {
 					repeat = false;
 					break;
 				case 1:
-					if(employeeService.add()) {
-						System.out.println("Работник добавлен");
+					if(userService.add()) {
+						System.out.println("Пользователь добавлен");
 					}else{
-						System.out.println("Работника добавить не удалось");
-					};
-					break;
-				case 2:
-					if(personService.add()) {
-						System.out.println("Персона добавлена");
-					}else{
-						System.out.println("Персону добавить не удалось");
+						System.out.println("Пользователя добавить не удалось");
 					};
 					break;
 				default:

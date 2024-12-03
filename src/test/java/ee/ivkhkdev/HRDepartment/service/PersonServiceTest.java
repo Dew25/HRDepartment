@@ -66,7 +66,7 @@ class PersonServiceTest {
                 new Person("Jane", "Smith", "987654321")
         );
         when(personRepository.findAll()).thenReturn(persons);
-        when(personAppHelper.pirintLits(persons)).thenReturn(true);
+        when(personAppHelper.pirintLits()).thenReturn(true);
 
         // Act
         boolean result = personService.print();
@@ -74,7 +74,7 @@ class PersonServiceTest {
         // Assert
         assertTrue(result, "Printing persons should return true when there are persons in the list.");
         verify(personRepository, times(1)).findAll();
-        verify(personAppHelper, times(1)).pirintLits(persons);
+        verify(personAppHelper, times(1)).pirintLits();
     }
 
     @Test
@@ -82,7 +82,7 @@ class PersonServiceTest {
         // Arrange
         List<Person> emptyList = List.of();
         when(personRepository.findAll()).thenReturn(emptyList);
-        when(personAppHelper.pirintLits(emptyList)).thenReturn(false);
+        when(personAppHelper.pirintLits()).thenReturn(false);
 
         // Act
         boolean result = personService.print();
@@ -90,7 +90,7 @@ class PersonServiceTest {
         // Assert
         assertFalse(result, "Printing persons should return false when the list is empty.");
         verify(personRepository, times(1)).findAll();
-        verify(personAppHelper, times(1)).pirintLits(emptyList);
+        verify(personAppHelper, times(1)).pirintLits();
     }
 
     @Test

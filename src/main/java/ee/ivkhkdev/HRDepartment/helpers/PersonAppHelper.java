@@ -30,25 +30,26 @@ public class PersonAppHelper implements AppHelper<Person>{
     }
 
     @Override
-    public boolean pirintLits(List<Person> entities) {
-        if(entities.isEmpty()) {
-            System.out.println("Спивок персон пуст");
+    public boolean pirintLits() {
+        List<Person> persons = personRepository.findAll();
+        if(persons.isEmpty()) {
+            System.out.println("Список персон пуст");
             return false;
         }
         System.out.println("--- Список персон ---");
-        for (int i = 0; i < entities.size(); i++) {
+        for (int i = 0; i < persons.size(); i++) {
             System.out.printf("%d. %s %s. %s%n",
-                    i+1,
-                    entities.get(i).getFirsname(),
-                    entities.get(i).getLastname(),
-                    entities.get(i).getPhone()
+                    persons.get(i).getId(),
+                    persons.get(i).getFirsname(),
+                    persons.get(i).getLastname(),
+                    persons.get(i).getPhone()
             );
         }
         return true;
     }
 
     @Override
-    public List<Person> update(List<Person> entities) {
-        return List.of();
+    public boolean update(Person person) {
+        return false;
     }
 }

@@ -80,7 +80,7 @@ class EmployeeAppHelperTest {
         List<Employee> employees = List.of(employee);
 
         // Act
-        boolean result = employeeAppHelper.pirintLits(employees);
+        boolean result = employeeAppHelper.pirintLits();
 
         // Assert
         assertTrue(result, "Printing the list of employees should be successful.");
@@ -89,7 +89,7 @@ class EmployeeAppHelperTest {
     @Test
     void testPirintLits_EmptyList() {
         // Act
-        boolean result = employeeAppHelper.pirintLits(List.of());
+        boolean result = employeeAppHelper.pirintLits();
 
         // Assert
         assertFalse(result, "Printing an empty list should return false.");
