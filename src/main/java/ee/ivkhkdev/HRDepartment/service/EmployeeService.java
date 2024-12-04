@@ -37,11 +37,6 @@ public class EmployeeService implements AppService<Employee>{
 
 
     @Override
-    public List<Employee> list() {
-        return employeeRepository.findAll();
-    }
-
-    @Override
     public boolean print() {
         return employeeAppHelper.pirintLits();
     }

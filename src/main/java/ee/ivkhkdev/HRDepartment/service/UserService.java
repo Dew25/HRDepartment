@@ -1,5 +1,7 @@
 package ee.ivkhkdev.HRDepartment.service;
 
+import ee.ivkhkdev.HRDepartment.entities.Employee;
+import ee.ivkhkdev.HRDepartment.entities.Person;
 import ee.ivkhkdev.HRDepartment.entities.User;
 import ee.ivkhkdev.HRDepartment.helpers.AppHelper;
 import ee.ivkhkdev.HRDepartment.repository.EmployeeRepository;
@@ -25,9 +27,17 @@ public class UserService implements AppService<User>{
         Optional<User> optionalUser = userAppHelper.create();
         if(optionalUser.isPresent()){
             User user = optionalUser.get();
-            user.getEmployee().setPerson(personRepository.save(user.getEmployee().getPerson()));
-            user.setEmployee(employeeRepository.save(user.getEmployee()));
+            Person person = user.getEmployee().getPerson();
+            Person savedPerson = personRepository.save(person);
+            Employee employee = user.getEmployee();
+            Employee savedEmployee = employeeRepository.save(employee);
+            user.getEmployee().setPerson(savedPerson);
+            user.setEmployee(savedEmployee);
             userRepository.save(user);
+ //     короткая запись вышележащих действий
+//            user.getEmployee().setPerson(personRepository.save(user.getEmployee().getPerson()));
+//            user.setEmployee(employeeRepository.save(user.getEmployee()));
+//            userRepository.save(user);
             return true;
         }
         return false;
@@ -35,16 +45,18 @@ public class UserService implements AppService<User>{
 
     @Override
     public boolean edit() {
-        return false;
+        User modifedUser = userAppHelper.update();
+        if(modifedUser == null){
+            return false;
+        }
+        userRepository.save(modifedUser);
+        return true;
     }
 
     @Override
     public boolean print() {
-        return false;
+        return userAppHelper.pirintLits();
     }
 
-    @Override
-    public List<User> list() {
-        return List.of();
-    }
+
 }

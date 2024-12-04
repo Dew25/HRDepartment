@@ -31,6 +31,10 @@ public class HrDepartmentApplication implements CommandLineRunner {
 			System.out.println("Список задач:");
 			System.out.println("0. Выход:");
 			System.out.println("1. Добавить пользователя:");
+			System.out.println("2. Список пользователей:");
+			System.out.println("3. Изменить данные пользователя:");
+
+
 			System.out.print("Введите номер задачи: ");
 			int task = Integer.parseInt(input.nextLine());
 			switch (task){
@@ -43,6 +47,14 @@ public class HrDepartmentApplication implements CommandLineRunner {
 					}else{
 						System.out.println("Пользователя добавить не удалось");
 					};
+					break;
+				case 2:
+					if(userService.print()){
+
+					};
+					break;
+				case 3:
+					userService.edit();
 					break;
 				default:
 					System.out.println("Выберите номер задачи из списка!");

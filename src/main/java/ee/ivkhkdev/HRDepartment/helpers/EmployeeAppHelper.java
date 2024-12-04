@@ -6,17 +6,14 @@ import ee.ivkhkdev.HRDepartment.entities.Person;
 
 import ee.ivkhkdev.HRDepartment.input.Input;
 import ee.ivkhkdev.HRDepartment.repository.EmployeeRepository;
-import ee.ivkhkdev.HRDepartment.repository.PersonRepository;
-import ee.ivkhkdev.HRDepartment.service.AppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
 @Component
-public class EmployeeAppHelper implements AppHelper<Employee>{
+public class EmployeeAppHelper implements AppHelper<Employee> {
     @Autowired
     private PersonAppHelper personAppHelper;
     @Autowired
@@ -70,8 +67,8 @@ public class EmployeeAppHelper implements AppHelper<Employee>{
     }
 
     @Override
-    public boolean update(Employee employee) {
-        return false;
+    public Employee update() {
+        return null;
     }
 
 

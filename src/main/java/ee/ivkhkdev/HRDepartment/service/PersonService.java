@@ -36,8 +36,5 @@ public class PersonService implements AppService<Person>{
         return personAppHelper.pirintLits();
     }
 
-    @Override
-    public List<Person> list() {
-        return personRepository.findAll();
-    }
+
 }
