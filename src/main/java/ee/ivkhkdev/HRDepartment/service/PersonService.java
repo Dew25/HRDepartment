@@ -18,7 +18,12 @@ public class PersonService implements AppService<Person>{
 
     @Override
     public boolean add() {
-        Optional<Person> person = personAppHelper.create();
+        Optional<Person> person = null;
+        try {
+            person = personAppHelper.create();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         if(person.isPresent()){
             personRepository.save(person.get());
             return true;
@@ -33,7 +38,7 @@ public class PersonService implements AppService<Person>{
 
     @Override
     public boolean print() {
-        return personAppHelper.pirintLits();
+        return personAppHelper.pirintLits(personRepository.findAll());
     }
 
 

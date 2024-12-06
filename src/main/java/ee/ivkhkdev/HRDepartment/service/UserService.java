@@ -24,7 +24,12 @@ public class UserService implements AppService<User>{
     @Transactional
     @Override
     public boolean add() {
-        Optional<User> optionalUser = userAppHelper.create();
+        Optional<User> optionalUser = null;
+        try {
+            optionalUser = userAppHelper.create();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         if(optionalUser.isPresent()){
             User user = optionalUser.get();
             Person person = user.getEmployee().getPerson();
@@ -45,7 +50,7 @@ public class UserService implements AppService<User>{
 
     @Override
     public boolean edit() {
-        User modifedUser = userAppHelper.update();
+        User modifedUser = userAppHelper.update((List<User>) userRepository.findAll());
         if(modifedUser == null){
             return false;
         }
@@ -55,8 +60,7 @@ public class UserService implements AppService<User>{
 
     @Override
     public boolean print() {
-        return userAppHelper.pirintLits();
+        return userAppHelper.pirintLits((List<User>) userRepository.findAll());
     }
-
 
 }

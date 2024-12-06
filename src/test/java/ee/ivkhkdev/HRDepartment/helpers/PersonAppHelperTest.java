@@ -73,7 +73,7 @@ class PersonAppHelperTest {
         List<Person> persons = List.of(person1, person2);
 
         // Act
-        boolean result = personAppHelper.pirintLits();
+        boolean result = personAppHelper.pirintLits(persons);
 
         // Assert
         assertTrue(result, "Printing the list of persons should return true for non-empty list.");
@@ -85,7 +85,7 @@ class PersonAppHelperTest {
         List<Person> persons = List.of();
 
         // Act
-        boolean result = personAppHelper.pirintLits();
+        boolean result = personAppHelper.pirintLits(persons);
 
         // Assert
         assertFalse(result, "Printing the list of persons should return false for an empty list.");

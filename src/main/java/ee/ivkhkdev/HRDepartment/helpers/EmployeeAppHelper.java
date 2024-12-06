@@ -5,7 +5,7 @@ import ee.ivkhkdev.HRDepartment.entities.Employee;
 import ee.ivkhkdev.HRDepartment.entities.Person;
 
 import ee.ivkhkdev.HRDepartment.input.Input;
-import ee.ivkhkdev.HRDepartment.repository.EmployeeRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,18 +18,19 @@ public class EmployeeAppHelper implements AppHelper<Employee> {
     private PersonAppHelper personAppHelper;
     @Autowired
     private Input input;
-    @Autowired
-    private EmployeeRepository emploeeRepository;
+
 
     @Override
-    public Optional<Employee> create() {
+    public Optional<Employee> create(){
         System.out.println("--- Создание работника ---");
         Employee employee = new Employee();
         System.out.print("Должность: ");
         employee.setPosition(input.nextLine());
         System.out.print("Зарплата: ");
         employee.setSalary(input.nextLine());
-        employee.setPerson(createPerson());
+        Person person = createPerson();
+        if(person == null) return Optional.empty();
+        employee.setPerson(person);
         return Optional.of(employee);
     }
     private Person createPerson(){
@@ -39,11 +40,12 @@ public class EmployeeAppHelper implements AppHelper<Employee> {
         }else{
             System.out.println("Error: Не удалось инициировать персону");
         }
-        return new Person();
+        return null;
+
     }
     @Override
-    public boolean pirintLits() {
-        List<Employee> employees = emploeeRepository.findAll();
+    public boolean pirintLits(List<Employee> employees) {
+        //List<Employee> employees = emploeeRepository.findAll();
         try {
             if(employees.isEmpty()){
                 System.out.println("Список работников пуст");
@@ -67,7 +69,7 @@ public class EmployeeAppHelper implements AppHelper<Employee> {
     }
 
     @Override
-    public Employee update() {
+    public Employee update(List<Employee> employees) {
         return null;
     }
 

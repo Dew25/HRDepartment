@@ -21,7 +21,12 @@ public class EmployeeService implements AppService<Employee>{
 
     @Override
     public boolean add() {
-        Optional<Employee> employee = employeeAppHelper.create();
+        Optional<Employee> employee = null;
+        try {
+            employee = employeeAppHelper.create();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         if(employee.isPresent()){
             employeeRepository.save(employee.get());
             return true;
@@ -38,6 +43,6 @@ public class EmployeeService implements AppService<Employee>{
 
     @Override
     public boolean print() {
-        return employeeAppHelper.pirintLits();
+        return employeeAppHelper.pirintLits(employeeRepository.findAll());
     }
 }

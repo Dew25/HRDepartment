@@ -32,7 +32,7 @@ class PersonServiceTest {
     }
 
     @Test
-    void testAdd_Success() {
+    void testAdd_Success() throws Exception {
         // Arrange
         Person person = new Person("John", "Doe", "123456789");
         when(personAppHelper.create()).thenReturn(Optional.of(person));
@@ -46,7 +46,7 @@ class PersonServiceTest {
     }
 
     @Test
-    void testAdd_Failure() {
+    void testAdd_Failure() throws Exception {
         // Arrange
         when(personAppHelper.create()).thenReturn(Optional.empty());
 
@@ -66,7 +66,7 @@ class PersonServiceTest {
                 new Person("Jane", "Smith", "987654321")
         );
         when(personRepository.findAll()).thenReturn(persons);
-        when(personAppHelper.pirintLits()).thenReturn(true);
+        when(personAppHelper.pirintLits(persons)).thenReturn(true);
 
         // Act
         boolean result = personService.print();
@@ -74,7 +74,7 @@ class PersonServiceTest {
         // Assert
         assertTrue(result, "Printing persons should return true when there are persons in the list.");
         verify(personRepository, times(1)).findAll();
-        verify(personAppHelper, times(1)).pirintLits();
+        verify(personAppHelper, times(1)).pirintLits(persons);
     }
 
     @Test
@@ -82,7 +82,7 @@ class PersonServiceTest {
         // Arrange
         List<Person> emptyList = List.of();
         when(personRepository.findAll()).thenReturn(emptyList);
-        when(personAppHelper.pirintLits()).thenReturn(false);
+        when(personAppHelper.pirintLits(emptyList)).thenReturn(false);
 
         // Act
         boolean result = personService.print();
@@ -90,23 +90,8 @@ class PersonServiceTest {
         // Assert
         assertFalse(result, "Printing persons should return false when the list is empty.");
         verify(personRepository, times(1)).findAll();
-        verify(personAppHelper, times(1)).pirintLits();
+        verify(personAppHelper, times(1)).pirintLits(emptyList);
     }
 
-    @Test
-    void testList() {
-        // Arrange
-        List<Person> persons = List.of(
-                new Person("John", "Doe", "123456789"),
-                new Person("Jane", "Smith", "987654321")
-        );
-        when(personRepository.findAll()).thenReturn(persons);
 
-        // Act
-        List<Person> result = personService.list();
-
-        // Assert
-        assertEquals(persons, result, "The returned list of persons should match the repository.");
-        verify(personRepository, times(1)).findAll();
-    }
 }

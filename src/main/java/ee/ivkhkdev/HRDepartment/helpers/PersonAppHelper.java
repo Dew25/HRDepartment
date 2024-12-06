@@ -1,5 +1,6 @@
 package ee.ivkhkdev.HRDepartment.helpers;
 
+import ee.ivkhkdev.HRDepartment.entities.Employee;
 import ee.ivkhkdev.HRDepartment.entities.Person;
 import ee.ivkhkdev.HRDepartment.input.Input;
 import ee.ivkhkdev.HRDepartment.repository.PersonRepository;
@@ -30,8 +31,8 @@ public class PersonAppHelper implements AppHelper<Person>{
     }
 
     @Override
-    public boolean pirintLits() {
-        List<Person> persons = personRepository.findAll();
+    public boolean pirintLits(List<Person> persons) {
+       // List<Person> persons = personRepository.findAll();
         if(persons.isEmpty()) {
             System.out.println("Список персон пуст");
             return false;
@@ -49,7 +50,9 @@ public class PersonAppHelper implements AppHelper<Person>{
     }
 
     @Override
-    public boolean update(Person person) {
-        return false;
+    public Person update(List<Person> persons) {
+        return null;
     }
+
+
 }

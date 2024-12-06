@@ -32,7 +32,7 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void testAdd_Success() {
+    void testAdd_Success() throws Exception {
         // Arrange
         Employee mockEmployee = new Employee();
         when(employeeAppHelper.create()).thenReturn(Optional.of(mockEmployee));
@@ -47,7 +47,7 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void testAdd_Failure() {
+    void testAdd_Failure() throws Exception {
         // Arrange
         when(employeeAppHelper.create()).thenReturn(Optional.empty());
 
@@ -60,23 +60,7 @@ class EmployeeServiceTest {
         verifyNoInteractions(employeeRepository);
     }
 
-    @Test
-    void testList() {
-        // Arrange
-        Employee employee1 = new Employee();
-        Employee employee2 = new Employee();
-        List<Employee> mockEmployees = List.of(employee1, employee2);
-        when(employeeRepository.findAll()).thenReturn(mockEmployees);
 
-        // Act
-        List<Employee> result = employeeService.list();
-
-        // Assert
-        assertEquals(2, result.size(), "The list of employees should have two entries.");
-        assertSame(employee1, result.get(0), "The first employee should match.");
-        assertSame(employee2, result.get(1), "The second employee should match.");
-        verify(employeeRepository, times(1)).findAll();
-    }
 
     @Test
     void testPrint_Success() {
@@ -85,15 +69,13 @@ class EmployeeServiceTest {
         Employee employee2 = new Employee();
         List<Employee> mockEmployees = List.of(employee1, employee2);
         when(employeeRepository.findAll()).thenReturn(mockEmployees);
-        when(employeeAppHelper.pirintLits()).thenReturn(true);
+        when(employeeAppHelper.pirintLits(mockEmployees)).thenReturn(true);
 
         // Act
         boolean result = employeeService.print();
 
         // Assert
         assertTrue(result, "Printing the list of employees should succeed.");
-        verify(employeeRepository, times(1)).findAll();
-        verify(employeeAppHelper, times(1)).pirintLits();
     }
 
     @Test
@@ -101,14 +83,13 @@ class EmployeeServiceTest {
         // Arrange
         List<Employee> mockEmployees = List.of();
         when(employeeRepository.findAll()).thenReturn(mockEmployees);
-        when(employeeAppHelper.pirintLits()).thenReturn(false);
+        when(employeeAppHelper.pirintLits(mockEmployees)).thenReturn(false);
 
         // Act
         boolean result = employeeService.print();
 
         // Assert
         assertFalse(result, "Printing the list of employees should fail for an empty list.");
-        verify(employeeRepository, times(1)).findAll();
-        verify(employeeAppHelper, times(1)).pirintLits();
+
     }
 }

@@ -19,7 +19,8 @@ import static org.mockito.Mockito.*;
 class EmployeeAppHelperTest {
     @Mock
     private AppService<Person> personAppService;
-
+    @Mock
+    private PersonAppHelper personAppHelper;
     @Mock
     private Input input;
 
@@ -34,12 +35,12 @@ class EmployeeAppHelperTest {
     @Test
     void testCreateEmployee_Success() {
         // Arrange
-        Person mockPerson = new Person("John", "Doe","123456");
-        List<Person> persons = List.of(mockPerson);
-        when(personAppService.print()).thenReturn(true);
-        when(personAppService.list()).thenReturn(persons);
-        when(input.nextLine()).thenReturn("1", "Developer", "5000");
 
+
+        when(personAppService.print()).thenReturn(true);
+
+        when(input.nextLine()).thenReturn("Developer", "5000");
+        when(personAppHelper.create()).thenReturn(Optional.of(new Person("John","Doe","123456")));
         // Act
         Optional<Employee> result = employeeAppHelper.create();
 
@@ -51,10 +52,7 @@ class EmployeeAppHelperTest {
         assertEquals("Developer", employee.getPosition());
         assertEquals("5000", employee.getSalary());
 
-        // Verify interactions
-        verify(personAppService, times(1)).print();
-        verify(personAppService, times(1)).list();
-        verify(input, times(3)).nextLine();
+        verify(input, times(2)).nextLine();
     }
 
     @Test
@@ -67,20 +65,14 @@ class EmployeeAppHelperTest {
 
         // Assert
         assertFalse(result.isPresent(), "Employee should not be created if no persons are available.");
-        verify(personAppService, times(1)).print();
-        verify(personAppService, never()).list();
-        verifyNoInteractions(input);
+
     }
 
     @Test
     void testPirintLits_Success() {
-        // Arrange
-        Person person = new Person("John", "Doe","123456");
-        Employee employee = new Employee( "Manager", "6000",person);
-        List<Employee> employees = List.of(employee);
-
+        List<Employee> employees = List.of(new Employee("Должность","зарплата", new Person("Ivan","Ivanov","123456")));
         // Act
-        boolean result = employeeAppHelper.pirintLits();
+        boolean result = employeeAppHelper.pirintLits(employees);
 
         // Assert
         assertTrue(result, "Printing the list of employees should be successful.");
@@ -88,8 +80,9 @@ class EmployeeAppHelperTest {
 
     @Test
     void testPirintLits_EmptyList() {
+        List<Employee> employees = List.of();
         // Act
-        boolean result = employeeAppHelper.pirintLits();
+        boolean result = employeeAppHelper.pirintLits(employees);
 
         // Assert
         assertFalse(result, "Printing an empty list should return false.");

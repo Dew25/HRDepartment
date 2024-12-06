@@ -1,11 +1,8 @@
 package ee.ivkhkdev.HRDepartment.helpers;
 
 import ee.ivkhkdev.HRDepartment.entities.Employee;
-import ee.ivkhkdev.HRDepartment.entities.Person;
 import ee.ivkhkdev.HRDepartment.entities.User;
 import ee.ivkhkdev.HRDepartment.input.Input;
-import ee.ivkhkdev.HRDepartment.repository.EmployeeRepository;
-import ee.ivkhkdev.HRDepartment.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.stereotype.Component;
@@ -20,8 +17,6 @@ public class UserAppHelper implements AppHelper<User>{
     private Input input;
     @Autowired
     private EmployeeAppHelper employeeAppHelper;
-    @Autowired
-    private UserRepository userRepository;
     @Autowired
     private PersonAppHelper personAppHelper;
     @Autowired
@@ -52,8 +47,8 @@ public class UserAppHelper implements AppHelper<User>{
 
 
     @Override
-    public boolean pirintLits() {
-        List<User> users = (List<User>) userRepository.findAll();
+    public boolean pirintLits(List<User> users) {
+       // List<User> users = (List<User>) userRepository.findAll();
         if(users.isEmpty()){
             System.out.println("Список пользователей пуст");
             return false;
@@ -61,7 +56,7 @@ public class UserAppHelper implements AppHelper<User>{
         System.out.println("----- Список пользователей -----");
         for (int i=0;i<users.size();i++){
             System.out.printf("%d. %s %s. %s. %s.%n",
-                    users.get(i).getId(),
+                    i+1,
                     users.get(i).getEmployee().getPerson().getFirsname(),
                     users.get(i).getEmployee().getPerson().getLastname(),
                     users.get(i).getEmployee().getPosition(),
@@ -71,14 +66,11 @@ public class UserAppHelper implements AppHelper<User>{
     }
 
     @Override
-    public User update() {
-        this.pirintLits();
+    public User update(List<User> users) {
+        this.pirintLits(users);
         System.out.print("Выберите номер пользователя из списка: ");
-        Optional<User> optionalUser = userRepository.findById(Long.parseLong(input.nextLine()));
-        User user = null;
-        if(optionalUser.isPresent()){
-            user = optionalUser.get();
-        }
+        int userNumber = Integer.parseInt(input.nextLine());
+        User user = users.get(userNumber-1);
         System.out.println("У пользователя такое имя: "+user.getEmployee().getPerson().getFirsname());
         System.out.print("Изменить ? (y/n)" );
         int yesOrNo = Integer.parseInt(input.nextLine());
